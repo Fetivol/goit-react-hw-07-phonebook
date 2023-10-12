@@ -3,6 +3,7 @@ import {
   ListElem,
   Button,
 } from 'components/ContactsList/ContactsList.styled';
+import { Loader } from 'components/Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/operations';
 import { selectIsLoading, selectVisibleContacts } from 'redux/selectors';
@@ -14,7 +15,7 @@ export const ContactsList = () => {
 
   return (
     <>
-      {isLoading && <p>Loading</p>}
+      {isLoading && <Loader />}
       {visibleItems.length > 0 ? (
         <List>
           {visibleItems.map(({ id, name, phone }) => {
