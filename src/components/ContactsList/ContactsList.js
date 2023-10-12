@@ -9,11 +9,9 @@ import { selectIsLoading, selectVisibleContacts } from 'redux/selectors';
 
 export const ContactsList = () => {
   const isLoading = useSelector(selectIsLoading);
-
   const dispatch = useDispatch();
-  // const contacts = useSelector(selectContacts);
   const visibleItems = useSelector(selectVisibleContacts);
-  console.log({ visibleItems });
+
   return (
     <>
       {isLoading && <p>Loading</p>}

@@ -13,7 +13,7 @@ const slice = createSlice({
     [fetchContacts.pending](state) {
       state.isLoading = true;
     },
-    [fetchContacts.fullfield](state, action) {
+    [fetchContacts.fulfilled](state, action) {
       state.contacts = action.payload;
       state.isLoading = false;
     },
@@ -25,7 +25,7 @@ const slice = createSlice({
     [addContacts.pending](state) {
       state.isLoading = true;
     },
-    [addContacts.fullfield](state, action) {
+    [addContacts.fulfilled](state, action) {
       state.contacts.push(action.payload);
       state.isLoading = false;
     },
@@ -37,7 +37,7 @@ const slice = createSlice({
     [deleteContact.pending](state) {
       state.isLoading = true;
     },
-    [deleteContact.fullfield](state, action) {
+    [deleteContact.fulfilled](state, action) {
       state.contacts = state.contacts.filter(
         contact => contact.id !== action.payload.id
       );
