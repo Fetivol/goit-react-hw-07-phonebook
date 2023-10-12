@@ -1,39 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-const initialState = {
-  contacts: [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],
-};
+import { fetchContacts, addContacts, deleteContact } from './operations';
 
 const slice = createSlice({
   name: 'contacts',
-  initialState,
-  reducers: {
-    newContact: {
-      reducer(state, action) {
-        state.contacts = [...state.contacts, action.payload];
-      },
-      prepare({ name, number }) {
-        return {
-          payload: {
-            id: nanoid(),
-            name,
-            number,
-          },
-        };
-      },
+  initialState: {
+    contacts: [],
+    isLoading: false,
+    error: null,
+  },
+  extraReducers: {
+    //fetch
+    [fetchContacts.pending](state) {
+      state.isLoading = true;
     },
-
-    deleteContact(state, action) {
+    [fetchContacts.fullfield](state, action) {
+      state.contacts = action.payload;
+      state.isLoading = false;
+    },
+    [fetchContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //add
+    [addContacts.pending](state) {
+      state.isLoading = true;
+    },
+    [addContacts.fullfield](state, action) {
+      state.contacts.push(action.payload);
+      state.isLoading = false;
+    },
+    [addContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //delete
+    [deleteContact.pending](state) {
+      state.isLoading = true;
+    },
+    [deleteContact.fullfield](state, action) {
       state.contacts = state.contacts.filter(
-        contact => contact.id !== action.payload
+        contact => contact.id !== action.payload.id
       );
+      state.isLoading = false;
+    },
+    [deleteContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
-export const { newContact, deleteContact } = slice.actions;
+// export const { newContact, deleteContact } = slice.actions;
 export const contactsReducer = slice.reducer;

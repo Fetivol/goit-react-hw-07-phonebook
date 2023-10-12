@@ -4,19 +4,19 @@ import {
   Button,
 } from 'components/ContactsList/ContactsList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 import { selectVisibleContacts } from 'redux/selectors';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
-
+  // const contacts = useSelector(selectContacts);
   const visibleItems = useSelector(selectVisibleContacts);
   return visibleItems.length > 0 ? (
     <List>
-      {visibleItems.map(({ id, name, number }) => {
+      {visibleItems.map(({ id, name, phone }) => {
         return (
           <ListElem key={id}>
-            {name}: {number}
+            {name}: {phone}
             <Button
               type="button"
               onClick={() => {
