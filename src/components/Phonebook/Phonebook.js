@@ -20,7 +20,7 @@ const InputSchema = Yup.object().shape({
       "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
     )
     .required('Required'),
-  number: Yup.string()
+  phone: Yup.string()
     .min(9, '9 digits required!')
     .max(13, 'Less than 13 symbols!')
     .matches(
@@ -36,13 +36,13 @@ export const Phonebook = () => {
 
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      initialValues={{ name: '', phone: '' }}
       validationSchema={InputSchema}
       onSubmit={(values, actions) => {
         const existingContact = contacts.find(
           c =>
             c.name.toLowerCase() === values.name.toLowerCase() ||
-            c.number === values.number
+            c.phone === values.phone
         );
         if (existingContact) {
           alert('Contact already exists!');
@@ -60,8 +60,8 @@ export const Phonebook = () => {
         </Label>
         <Label>
           Name
-          <StyledField name="number" type="tel" placeholder="number" />
-          <StyledErrorMessage component="div" name="number" />
+          <StyledField name="phone" type="tel" placeholder="phone" />
+          <StyledErrorMessage component="div" name="phone" />
         </Label>
         <Button type="submit">Submit</Button>
       </StyledForm>
